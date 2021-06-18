@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 18:20:14 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/18 16:15:37 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/18 19:49:44 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ void	eating(t_philosopher *phil)
 		printf("%d ms Ph#%d is eating\n", get_cur_time(phil->all->start), phil->num);
 	pthread_mutex_unlock(&phil->all->print_mutex);
 
-	while (get_cur_time(phil->all->start) - phil->t < phil->all->eat_time)
-		usleep(1);
+	phil->num_eats++;
+	while ((get_cur_time(phil->all->start) - phil->t) < phil->all->eat_time)
+		usleep(100);
 	return ;
 }
 
@@ -43,8 +44,8 @@ void	sleeping(t_philosopher *phil)
 		printf("%d ms Ph#%d is sleeping\n", get_cur_time(phil->all->start), phil->num);
 	pthread_mutex_unlock(&phil->all->print_mutex);
 
-	while (get_cur_time(phil->all->start) - s < phil->all->sleep_time)
-		usleep(1);
+	while ((get_cur_time(phil->all->start) - s) < phil->all->sleep_time)
+		usleep(100);
 	return ;
 }
 
@@ -61,9 +62,23 @@ int	check_phs_hearts(t_philosopher *ph)
 		{
 			ph->all->finish_flag = 1;
 			printf("%d ms Ph#%d died\n", get_cur_time(ph->all->start), ph[i].num);
-			return (0);
+			return (1);
 		}
 	}
 	pthread_mutex_unlock(&ph->all->print_mutex);
+	return (0);
+}
+
+int	check_number_of_eats(t_philosopher *ph)
+{
+	int i;
+
+	i = -1;
+	while (++i < ph->all->num_of_phs)
+	{
+		if (ph[i].num_eats >= ph->all->nums_of_eatings)
+			continue ;
+		return (0);
+	}
 	return (1);
 }

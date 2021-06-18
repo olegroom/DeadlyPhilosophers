@@ -19,12 +19,10 @@ typedef struct  s_philo
     int eat_time;
     int sleep_time;
     int nums_of_eatings;
-	int cur_num_of_eatings;
     struct timeval start;
     int fl_noe;
 	int i;
 	int finish_flag;
-	int cur_num_of_eat;
 	pthread_mutex_t print_mutex;
 }               t_philo;
 
@@ -32,9 +30,11 @@ typedef struct	s_philosopher
 {
 	pthread_mutex_t right_fork;
 	pthread_mutex_t left_fork;
+	int num_eats;
 	int t;
 	int checker;
 	int num;
+	int fl;
 	t_philo *all;
 	pthread_t thr;
 }				t_philosopher;
@@ -53,5 +53,5 @@ void	eating(t_philosopher *phil);
 void	sleeping(t_philosopher *phil);
 void	thinking(t_philosopher *phil);
 int		check_phs_hearts(t_philosopher *ph);
-
+int		check_number_of_eats(t_philosopher *ph);
 #endif
