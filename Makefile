@@ -3,12 +3,12 @@ SRC = actions.c help1.c      memory.c     parser.c     philo.h      philo_main.c
 NAME = philo
 
 all: $(SRC)
-	gcc $(SRC)
-	./a.out 2 8445 2453 2766 4
+	gcc $(SRC) -g
+	./a.out 3 2000 1000 1500 5
 
 without_noe: 
-	gcc $(SRC)
-	./a.out 10 8445 2453 2766
+	gcc $(SRC) -g
+	./a.out 10 8445 3453 3767
 
 crash1:
 	gcc $(SRC)

@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:02:26 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/15 19:47:52 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/17 17:41:37 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,6 @@ void	show_data(t_philo *all)
 		printf("Number of eatings (for each ph) = %d\n\n", all->nums_of_eatings);
 }
 
-void	print_while(char *str)
-{
-	int i;
-
-	i = -1;
-	while (++i < 2)
-	{
-		printf("%s\n", str);
-		usleep(500000);
-	}
-}
-
 int	get_cur_time(struct timeval start)
 {
 	struct timeval	end;
@@ -42,6 +30,10 @@ int	get_cur_time(struct timeval start)
 	gettimeofday(&end, NULL);
 	c_t = ((end.tv_sec * 1000000 + end.tv_usec) - \
 	(start.tv_sec * 1000000 + start.tv_usec)) / 1000;
-	printf ("\n%d ms ", c_t);
 	return (c_t);
+}
+
+void	print_cur_time(struct timeval start)
+{
+	printf("%d ms ", get_cur_time(start));
 }

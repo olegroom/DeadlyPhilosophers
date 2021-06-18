@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:39:39 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/15 19:47:11 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/17 22:48:19 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,72 @@
 
 void	*ft_start_to_live(void *args)
 {
-	t_philo *all = (t_philo *)args;
+	t_philosopher	*phil;
+	
+	phil = (t_philosopher *)args;
+	while (phil->checker == 1)
+		continue ;
+
 	while(1)
 	{
-		// thinking(all);
-		// eating(all);
-		sleeping(all);
+		thinking(phil);
+		eating(phil);
+		sleeping(phil);
 	}
 	return (NULL);
 }
 
 void	ft_run_threads(t_philo *all)
 {
+	t_philosopher *ph;
 	int i;
 
+	ph = malloc(sizeof(t_philosopher) * all->num_of_phs + 1);
+
 	i = -1;
-	while (++i < all->num_of_phs)
+	while (++i < all->num_of_phs + 1)
 	{
-		if (pthread_create(&all->thr[i], NULL, ft_start_to_live, all) != SUCCESS)
+		if (i == all->num_of_phs)
+			ph[i].checker = 1;
+		else
+			ph[i].checker = 0;
+		ph[i].all = all;
+		ph[i].num = i;
+		ph[i].num_of_eats = 0;
+		if (pthread_mutex_init(&ph[i].right_fork, NULL) != SUCCESS)
+			error_found("Mutex init error");
+		if (i + 1 == all->num_of_phs)
+			ph[0].left_fork = ph[i].right_fork;
+		else if (i < all->num_of_phs)
+			ph[i + 1].left_fork = ph[i].right_fork;
+		if (pthread_create(&ph[i].thr, NULL, ft_start_to_live, &ph[i]) != SUCCESS)
 			error_found("Creation thread error");
-		all->philos[i].num = i;
-		all->philos[i].num_of_eats = 0;
-		all->philos[i].thr_ID = (int)all->thr[i];
-		// printf("Philosopher #%d Have %d ID\n", all->philos[i].num, all->philos[i].thr_ID);
-		usleep(1000);
+		// usleep(1000);
 	}
 
-	while(all->finish_flag == 0)
-		continue;
+	while(check_phs_hearts(ph) == 1)
+		continue ;
+	// i = -1;
+	// while (++i < ph->all->num_of_phs + 1)
+	// 	pthread_detach(ph[i].thr);
+	
 }
 
 int	main(int ac, char **argv)
 {
 	t_philo	all;
 
-	if (pthread_mutex_init(&all.mutex, NULL) != SUCCESS)
-		error_found("Mutex init error");
 	gettimeofday(&all.start, NULL);
 	if (ac != 6 && ac != 5)
 		error_found("Wrong number of arguments");
 	ft_pars_and_init(&all, argv);
 	show_data(&all);
-	
+
+	if (pthread_mutex_init(&all.print_mutex, NULL) != SUCCESS)
+		error_found("Mutex init error");
 	
 	ft_run_threads(&all);
-
-	get_cur_time(all.start);
-	pthread_mutex_destroy(&all.mutex);
+	
+	pthread_mutex_destroy(&all.print_mutex);
 	return (0);
 }
