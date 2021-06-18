@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:39:39 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/17 22:48:19 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/18 16:08:35 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	ft_run_threads(t_philo *all)
 			ph[i].checker = 0;
 		ph[i].all = all;
 		ph[i].num = i;
-		ph[i].num_of_eats = 0;
 		if (pthread_mutex_init(&ph[i].right_fork, NULL) != SUCCESS)
 			error_found("Mutex init error");
 		if (i + 1 == all->num_of_phs)
@@ -54,14 +53,14 @@ void	ft_run_threads(t_philo *all)
 			ph[i + 1].left_fork = ph[i].right_fork;
 		if (pthread_create(&ph[i].thr, NULL, ft_start_to_live, &ph[i]) != SUCCESS)
 			error_found("Creation thread error");
-		// usleep(1000);
 	}
 
 	while(check_phs_hearts(ph) == 1)
 		continue ;
-	// i = -1;
-	// while (++i < ph->all->num_of_phs + 1)
-	// 	pthread_detach(ph[i].thr);
+	i = -1;
+	while (++i < ph->all->num_of_phs + 1)
+		pthread_detach(ph[i].thr);
+	free(ph);
 	
 }
 

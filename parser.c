@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:01:21 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/17 17:18:42 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/18 15:41:40 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,16 @@ void	ft_pars_and_init(t_philo *all, char **argv)
 {
 	all->i = 0;
 	all->finish_flag = 0;
-	all->time = 0;
-	
+
 	all->num_of_phs = ft_atoi(argv[1]);
 	all->die_time = ft_atoi(argv[2]);
 	all->eat_time = ft_atoi(argv[3]);
 	all->sleep_time = ft_atoi(argv[4]);
 	if (argv[5])
 	{
-		all->nums_of_eatings = ft_atoi(argv[5]);
+		all->nums_of_eatings = ft_atoi(argv[5]) * all->num_of_phs;
 		all->fl_noe = 1;
 	}
+	else
+		all->fl_noe = 0;
 }
