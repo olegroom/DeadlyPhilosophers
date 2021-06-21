@@ -6,11 +6,12 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:39:39 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/18 19:52:20 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/21 20:24:34 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
 
 void	*ft_start_to_live(void *args)
 {
@@ -18,30 +19,11 @@ void	*ft_start_to_live(void *args)
 	
 	phil = (t_philosopher *)args;
 
-	// if (pthread_mutex_init(&phil[phil->num].right_fork, NULL) != SUCCESS)
-	// 	error_found("Mutex init error");
-	// if (i + 1 == all->num_of_phs)
-	// 	ph[0].left_fork = ph[i].right_fork;
-	// phil[phil->num + 1].left_fork = phil[phil->num].right_fork;
-
-	// if (phil->num == 0) {
-	// 	printf("%p\n", &phil[phil->num].left_fork);
-	// 	printf("%p\n", &phil[phil->num].right_fork);
-	// }
-	// if (phil->num == 1) {
-	// 	printf("%p\n", &phil[phil->num].left_fork);
-	// 	printf("%p\n", &phil[phil->num].right_fork);
-	// }
-	// if (phil->num == 2) {
-	// 	printf("%p\n", &phil[phil->num].left_fork);
-	// 	printf("%p\n", &phil[phil->num].right_fork);
-	// }
-		
-
 	while(1)
 	{
 		thinking(phil);
-		eating(phil);
+		take_forks(phil);
+		// eating(phil);
 		sleeping(phil);
 	}
 	return (NULL);
@@ -52,6 +34,7 @@ void	ft_run_threads(t_philo *all)
 	t_philosopher *ph;
 	int i;
 
+
 	ph = malloc(sizeof(t_philosopher) * all->num_of_phs + 1);
 	i = -1;
 	while (++i < all->num_of_phs)
@@ -59,10 +42,12 @@ void	ft_run_threads(t_philo *all)
 		ph[i].all = all;
 		ph[i].num = i;
 		ph[i].num_eats = 0;
+	
 		if (pthread_create(&ph[i].thr, NULL, ft_start_to_live, &ph[i]) != SUCCESS)
 			error_found("Creation thread error");
 	}
 
+	usleep(1000);
 	if (ph->all->fl_noe == 0)
 		while (check_phs_hearts(ph) == 0)
 			continue ;
@@ -91,6 +76,14 @@ int	main(int ac, char **argv)
 	
 	ft_run_threads(&all);
 	
+	
+	int i = -1;
+	
+	while (++i < all.num_of_phs)
+	{
+		if (pthread_mutex_destroy(&all.forks[i].fork) != SUCCESS)
+			error_found("Mutex destroy error");
+	}
 	pthread_mutex_destroy(&all.print_mutex);
 	return (0);
 }

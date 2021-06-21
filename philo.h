@@ -10,7 +10,11 @@
 #include <sys/time.h>
 #include <pthread.h>
 
-int k;
+typedef struct	s_mutex
+{
+	pthread_mutex_t fork;
+	int fl;
+}				t_mutex;
 
 typedef struct  s_philo
 {
@@ -24,21 +28,22 @@ typedef struct  s_philo
 	int i;
 	int finish_flag;
 	pthread_mutex_t print_mutex;
+	t_mutex *forks;
 }               t_philo;
 
 typedef struct	s_philosopher
 {
-	pthread_mutex_t right_fork;
-	pthread_mutex_t left_fork;
 	int num_eats;
 	int t;
-	int checker;
 	int num;
 	int fl;
 	t_philo *all;
 	pthread_t thr;
 }				t_philosopher;
 
+void	take_forks(t_philosopher *phil);
+void	unlock_mutex(t_mutex *forks);
+void	lock_mutex(t_mutex *forks);
 void	print_cur_time(struct timeval start);
 void	show_data(t_philo *all);
 int     get_cur_time(struct timeval start);

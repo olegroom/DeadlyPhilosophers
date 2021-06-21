@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:01:21 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/18 17:25:17 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/21 17:54:40 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,20 @@ int	ft_atoi(const char *str)
 
 void	ft_pars_and_init(t_philo *all, char **argv)
 {
+	int i;
+
 	all->i = 0;
 	all->finish_flag = 0;
-
 	all->num_of_phs = ft_atoi(argv[1]);
+	all->forks = malloc(sizeof(t_mutex) * all->num_of_phs);
+
+	i = -1;
+	while (++i < all->num_of_phs)
+	{
+		if (pthread_mutex_init(&all->forks[i].fork, NULL) != SUCCESS)
+			error_found("Mutex init error");
+		all->forks[i].fl = 0;
+	}
 	all->die_time = ft_atoi(argv[2]);
 	all->eat_time = ft_atoi(argv[3]);
 	all->sleep_time = ft_atoi(argv[4]);

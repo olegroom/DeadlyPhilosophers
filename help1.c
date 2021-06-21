@@ -6,11 +6,23 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:02:26 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/18 15:42:43 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/21 17:55:20 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	unlock_mutex(t_mutex *forks)
+{
+	pthread_mutex_unlock(&forks->fork);
+	forks->fl = 0;
+}
+
+void	lock_mutex(t_mutex *forks)
+{
+	pthread_mutex_lock(&forks->fork);
+	forks->fl = 1;
+}
 
 void	show_data(t_philo *all)
 {
@@ -31,22 +43,4 @@ int	get_cur_time(struct timeval start)
 	c_t = ((end.tv_sec * 1000000 + end.tv_usec) - \
 	(start.tv_sec * 1000000 + start.tv_usec)) / 1000;
 	return (c_t);
-}
-
-void	print_cur_time(struct timeval start)
-{
-	printf("%d ms ", get_cur_time(start));
-}
-
-void	printf_while(char *str, int i)
-{
-	int k;
-	
-	k = 0;
-	while (k < i)
-	{
-		printf("%s\n", str);
-		usleep(10000);
-		k++;
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 18:20:14 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/18 19:49:44 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/21 20:24:55 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,38 @@ void	thinking(t_philosopher *phil)
 	pthread_mutex_unlock(&phil->all->print_mutex);
 }
 
+void	take_forks(t_philosopher *phil)
+{
+	if (phil->num % 2 == 0)
+	{
+		lock_mutex(&phil->all->forks[phil->num]);
+		lock_mutex(&phil->all->forks[phil->num - 1]);
+		eating(phil);
+		unlock_mutex(&phil->all->forks[phil->num]);
+		unlock_mutex(&phil->all->forks[phil->num - 1]);
+	}
+	else if (phil->num % 2 == 1)
+	{	
+		usleep(100000);
+		lock_mutex(&phil->all->forks[phil->num]);
+		lock_mutex(&phil->all->forks[phil->num - 1]);
+		eating(phil);
+		unlock_mutex(&phil->all->forks[phil->num]);
+		unlock_mutex(&phil->all->forks[phil->num - 1]);
+	}
+}
+
 void	eating(t_philosopher *phil)
 {
-	pthread_mutex_lock(&phil->all->print_mutex);
+	// take_forks(phil);
 	phil->t = get_cur_time(phil->all->start);
+	pthread_mutex_lock(&phil->all->print_mutex);
 	if (phil->all->finish_flag == 0)
 		printf("%d ms Ph#%d is eating\n", get_cur_time(phil->all->start), phil->num);
 	pthread_mutex_unlock(&phil->all->print_mutex);
-
 	phil->num_eats++;
 	while ((get_cur_time(phil->all->start) - phil->t) < phil->all->eat_time)
-		usleep(100);
+		usleep(1);
 	return ;
 }
 
