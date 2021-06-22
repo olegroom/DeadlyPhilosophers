@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:02:26 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/21 17:55:20 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/21 20:57:14 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 void	unlock_mutex(t_mutex *forks)
 {
-	pthread_mutex_unlock(&forks->fork);
+	if (pthread_mutex_unlock(&forks->fork) != SUCCESS)
+		error_found("Unlock mutex error");
 	forks->fl = 0;
 }
 
 void	lock_mutex(t_mutex *forks)
 {
-	pthread_mutex_lock(&forks->fork);
+	if (pthread_mutex_lock(&forks->fork) != SUCCESS)
+		error_found("Lock mutex error");
 	forks->fl = 1;
 }
 

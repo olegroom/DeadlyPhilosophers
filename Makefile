@@ -4,7 +4,7 @@ NAME = philo
 
 all: $(SRC)
 	gcc $(SRC) -g
-	./a.out 4 4000 1500 800
+	./a.out 4 1000 200 300
 
 without_noe: 
 	gcc $(SRC) -g

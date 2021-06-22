@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <pthread.h>
+#include <errno.h>
 
 typedef struct	s_mutex
 {
@@ -28,6 +29,7 @@ typedef struct  s_philo
 	int i;
 	int finish_flag;
 	pthread_mutex_t print_mutex;
+	pthread_mutex_t to_lock_mutex;
 	t_mutex *forks;
 }               t_philo;
 
@@ -41,7 +43,8 @@ typedef struct	s_philosopher
 	pthread_t thr;
 }				t_philosopher;
 
-void	take_forks(t_philosopher *phil);
+int		clear_traces(t_philosopher *ph);
+int		take_forks(t_philosopher *phil);
 void	unlock_mutex(t_mutex *forks);
 void	lock_mutex(t_mutex *forks);
 void	print_cur_time(struct timeval start);
