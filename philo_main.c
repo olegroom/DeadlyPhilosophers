@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:39:39 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/22 13:19:18 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/22 16:20:47 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ void	ft_run_threads(t_philo *all)
 			error_found("Creation thread error");
 	}
 
-	usleep(1000);
+	usleep(100);
 	if (ph->all->fl_noe == 0)
 		while (check_phs_hearts(ph) == 0)
-			usleep(1);
+			usleep(1000);
 	else if (ph->all->fl_noe == 1)
 		while(check_phs_hearts(ph) == 0 && check_number_of_eats(ph) == 0)
-			usleep(1);
+			usleep(1000);
 
 	clear_traces(ph);
 }

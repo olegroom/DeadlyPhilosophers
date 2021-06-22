@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:59:12 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/22 13:10:37 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/22 16:30:44 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,30 @@ int	clear_traces(t_philosopher *ph)
 		if (pthread_detach(ph[i].thr) != SUCCESS)
 			error_found("Pthread detach error");
 
+	usleep(50);
 	//all mutex_unlock
 	i = -1;
 	while (++i < ph->all->num_of_phs)
 		if (ph->all->forks[i].fl == 1)
 			unlock_mutex(&ph->all->forks[i]);
 
+	usleep(1000);
 	//all mutex destroy
 	i = -1;
 	while (++i < ph->all->num_of_phs)
 		pthread_mutex_destroy(&ph->all->forks[i].fork);
-		// if (pthread_mutex_destroy(&ph->all->forks[i].fork) == EBUSY)
-		// 	error_found("Mutex destroy error!");
+		if (pthread_mutex_destroy(&ph->all->forks[i].fork) == EBUSY)
+			error_found("Mutex destroy error!");
 	
 
 	//unlock and destroy print mutex
 	if (pthread_mutex_unlock(&ph->all->print_mutex) != SUCCESS)
 		error_found("Print mutex unlock error");
-	pthread_mutex_destroy(&ph->all->print_mutex);
-	// if (pthread_mutex_destroy(&ph->all->print_mutex) == EBUSY)
-	// 	error_found("Mutex destroy error!!!");
+	
+	usleep(1000);
+	// pthread_mutex_destroy(&ph->all->print_mutex);
+	if (pthread_mutex_destroy(&ph->all->print_mutex) == EBUSY)
+		error_found("Mutex destroy error!!!");
 	free(ph->all->forks);
 	free(ph);
 
