@@ -11,12 +11,6 @@
 #include <pthread.h>
 #include <errno.h>
 
-typedef struct	s_mutex
-{
-	pthread_mutex_t fork;
-	int fl;
-}				t_mutex;
-
 typedef struct  s_philo
 {
     int num_of_phs;
@@ -30,11 +24,13 @@ typedef struct  s_philo
 	int finish_flag;
 	pthread_mutex_t print_mutex;
 	pthread_mutex_t to_lock_mutex;
-	t_mutex *forks;
+	pthread_mutex_t *forks;
 }               t_philo;
 
 typedef struct	s_philosopher
 {
+	pthread_mutex_t *le_f;
+	pthread_mutex_t *ri_f;
 	int num_eats;
 	int t;
 	int num;
@@ -44,9 +40,7 @@ typedef struct	s_philosopher
 }				t_philosopher;
 
 int		clear_traces(t_philosopher *ph);
-int		take_forks(t_philosopher *phil);
-void	unlock_mutex(t_mutex *forks);
-void	lock_mutex(t_mutex *forks);
+void	take_forks(t_philosopher *phil);
 void	print_cur_time(struct timeval start);
 void	show_data(t_philo *all);
 int     get_cur_time(struct timeval start);

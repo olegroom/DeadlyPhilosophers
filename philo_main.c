@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:39:39 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/22 16:20:47 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/23 15:27:48 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,43 +18,58 @@ void	*ft_start_to_live(void *args)
 	t_philosopher	*phil;
 	
 	phil = (t_philosopher *)args;
-
-	while(1)
+		
+	while(phil->all->finish_flag == 0)
 	{
 		thinking(phil);
-		if (take_forks(phil) == 1)
-			break ;
+		take_forks(phil);
+		eating(phil);
+		drop_forks(phil);
 		sleeping(phil);
 	}
 	return (NULL);
 }
 
-void	ft_run_threads(t_philo *all)
+void	run_threads(t_philo *all, t_philosopher *ph)
 {
-	t_philosopher *ph;
 	int i;
 
-
-	ph = malloc(sizeof(t_philosopher) * all->num_of_phs + 1);
 	i = -1;
 	while (++i < all->num_of_phs)
 	{
+		if (i == 0)
+			ph[i].le_f = &all->forks[all->num_of_phs - 1];
+		else
+			ph[i].le_f = &all->forks[i - 1];
+		ph[i].ri_f = &all->forks[i];
 		ph[i].all = all;
 		ph[i].num = i;
 		ph[i].num_eats = 0;
-	
 		if (pthread_create(&ph[i].thr, NULL, ft_start_to_live, &ph[i]) != SUCCESS)
 			error_found("Creation thread error");
+		usleep(1000);
 	}
+}
 
-	usleep(100);
+void	checking_if_program_should_exit(t_philosopher *ph)
+{
 	if (ph->all->fl_noe == 0)
 		while (check_phs_hearts(ph) == 0)
 			usleep(1000);
 	else if (ph->all->fl_noe == 1)
 		while(check_phs_hearts(ph) == 0 && check_number_of_eats(ph) == 0)
 			usleep(1000);
+}
 
+
+void	launching_the_program(t_philo *all)
+{
+	t_philosopher *ph;
+
+	ph = malloc(sizeof(t_philosopher) * all->num_of_phs + 1);
+	run_threads(all, ph);
+	usleep(1000);
+	checking_if_program_should_exit(ph);
 	clear_traces(ph);
 }
 
@@ -66,12 +81,6 @@ int	main(int ac, char **argv)
 	if (ac != 6 && ac != 5)
 		error_found("Wrong number of arguments");
 	ft_pars_and_init(&all, argv);
-	show_data(&all);
-
-	if (pthread_mutex_init(&all.print_mutex, NULL) != SUCCESS)
-		error_found("Mutex init error");
-	pthread_mutex_init(&all.to_lock_mutex, NULL);
-	
-	ft_run_threads(&all);
+	launching_the_program(&all);
 	return (0);
 }

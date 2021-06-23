@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 18:20:14 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/22 16:35:45 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/23 14:47:39 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,57 +20,10 @@ void	thinking(t_philosopher *phil)
 	pthread_mutex_unlock(&phil->all->print_mutex);
 }
 
-int	take_forks(t_philosopher *phil)
-{
-	if (phil->num % 2 == 0)
-	{
-		if (phil->all->finish_flag == 1)	
-			usleep(1000000);
-		lock_mutex(&phil->all->forks[phil->num]);
-		if (phil->num == 0)
-			lock_mutex(&phil->all->forks[phil->all->num_of_phs - 1]);
-		else
-			lock_mutex(&phil->all->forks[phil->num - 1]);
-		
-		eating(phil);
-
-		if (phil->all->finish_flag == 1)	
-			usleep(1000000);
-		pthread_mutex_lock(&phil->all->print_mutex);
-		unlock_mutex(&phil->all->forks[phil->num]);
-		if (phil->num == 0)
-			unlock_mutex(&phil->all->forks[phil->all->num_of_phs - 1]);
-		else
-			unlock_mutex(&phil->all->forks[phil->num - 1]);
-		pthread_mutex_unlock(&phil->all->print_mutex);
-	}
-	else if (phil->num % 2 == 1)
-	{
-		usleep(50);
-		
-		if (phil->all->finish_flag == 1)	
-			usleep(1000000);
-		lock_mutex(&phil->all->forks[phil->num]);
-		lock_mutex(&phil->all->forks[phil->num - 1]);
-
-		
-		eating(phil);
-		
-		if (phil->all->finish_flag == 1)	
-			usleep(1000000);
-		pthread_mutex_lock(&phil->all->print_mutex);
-		unlock_mutex(&phil->all->forks[phil->num]);
-		unlock_mutex(&phil->all->forks[phil->num - 1]);
-		
-		pthread_mutex_unlock(&phil->all->print_mutex);
-	}
-	return (0);
-}
-
 void	eating(t_philosopher *phil)
 {
-	pthread_mutex_lock(&phil->all->print_mutex);
 	phil->t = get_cur_time(phil->all->start);
+	pthread_mutex_lock(&phil->all->print_mutex);
 	if (phil->all->finish_flag == 0)
 		printf("%d ms Ph#%d is eating\n", get_cur_time(phil->all->start), phil->num);
 	pthread_mutex_unlock(&phil->all->print_mutex);

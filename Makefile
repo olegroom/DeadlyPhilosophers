@@ -1,10 +1,10 @@
-SRC = actions.c help1.c      memory.c     parser.c     philo.h      philo_main.c
+SRC = actions.c help1.c      memory.c     parser.c    philo_main.c
 
 NAME = philo
 
 all: $(SRC)
 	gcc $(SRC) -g
-	./a.out 4 119 60 60
+	./a.out 4 1500 60 60
 
 without_noe: 
 	gcc $(SRC) -g
