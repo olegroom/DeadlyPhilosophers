@@ -6,20 +6,18 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:39:39 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/23 15:27:48 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/23 16:38:27 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-
+#include "../header/philo.h"
 
 void	*ft_start_to_live(void *args)
 {
 	t_philosopher	*phil;
 	
 	phil = (t_philosopher *)args;
-		
-	while(phil->all->finish_flag == 0)
+	while (phil->all->finish_flag == 0)
 	{
 		thinking(phil);
 		take_forks(phil);
@@ -47,7 +45,6 @@ void	run_threads(t_philo *all, t_philosopher *ph)
 		ph[i].num_eats = 0;
 		if (pthread_create(&ph[i].thr, NULL, ft_start_to_live, &ph[i]) != SUCCESS)
 			error_found("Creation thread error");
-		usleep(1000);
 	}
 }
 
@@ -68,7 +65,6 @@ void	launching_the_program(t_philo *all)
 
 	ph = malloc(sizeof(t_philosopher) * all->num_of_phs + 1);
 	run_threads(all, ph);
-	usleep(1000);
 	checking_if_program_should_exit(ph);
 	clear_traces(ph);
 }

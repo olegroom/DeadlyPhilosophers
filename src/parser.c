@@ -6,13 +6,14 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:01:21 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/23 15:04:03 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/23 15:54:52 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //add pars "only digits" in ft_atoi*.c
+//check die_time and eat_time to not be equal at start of the program
 
-#include "philo.h"
+#include "../header/philo.h"
 
 int 	len(long int nbr)
 {

@@ -6,19 +6,17 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:59:12 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/23 15:23:29 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/23 17:07:18 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../header/philo.h"
 
 int	clear_traces(t_philosopher *ph)
 {
-	exit(0);
 	int i;
 	
-
-	//all pthread detach
+	//all pthread join and detach
 	i = -1;
 	while (++i < ph->all->num_of_phs)
 		if (pthread_detach(ph[i].thr) != SUCCESS)
@@ -28,8 +26,6 @@ int	clear_traces(t_philosopher *ph)
 	i = -1;
 	while (++i < ph->all->num_of_phs)
 		pthread_mutex_unlock(&ph->all->forks[i]);
-
-	usleep(1000);
 	//forks_mutexes destroy
 	i = -1;
 	while (++i < ph->all->num_of_phs)
@@ -40,11 +36,12 @@ int	clear_traces(t_philosopher *ph)
 	//unlock and destroy print mutex (+ to_lock_mutex)
 	pthread_mutex_unlock(&ph->all->to_lock_mutex);
 	pthread_mutex_destroy(&ph->all->to_lock_mutex);
-	if (pthread_mutex_unlock(&ph->all->print_mutex) != SUCCESS)
-		error_found("Print mutex unlock error");
-	usleep(1000);
+	// if (pthread_mutex_unlock(&ph->all->print_mutex) != SUCCESS)
+	// 	error_found("Print mutex unlock error");
+	// usleep(1000);
 	if (pthread_mutex_destroy(&ph->all->print_mutex) == EBUSY)
 		error_found("Mutex destroy error!!!");
+	// pthread_mutex_destroy(&ph->all->print_mutex);
 
 	return (0);
 }
@@ -54,21 +51,6 @@ void	error_found(char *str)
 {
 	printf("%s\n", str);
 	exit(-1);
-}
-
-void	*ft_memset(void *dest, int c, size_t n)
-{
-	int				i;
-	unsigned char	*s;
-
-	i = 0;
-	s = (unsigned char *)dest;
-	while (i < (int)n)
-	{
-		s[i] = (unsigned char)c;
-		i++;
-	}
-	return (dest);
 }
 
 int	ft_memfree(char **str)

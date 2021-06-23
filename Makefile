@@ -1,14 +1,14 @@
-SRC = actions.c help1.c      memory.c     parser.c    philo_main.c
+SRC = src/actions.c     src/help1.c      src/memory.c     src/parser.c    src/philo_main.c src/death.c
+
+HEADER = philo.h
 
 NAME = philo
 
-all: $(SRC)
-	gcc $(SRC) -g
-	./a.out 4 1500 60 60
+O_FLAGS = -O2
 
-without_noe: 
-	gcc $(SRC) -g
-	./a.out 4 1000 200 300 5
+all: $(SRC)
+	gcc $(SRC) -g -Wall -Wextra -Werror -o $(NAME)
+	./$(NAME) 2 100 1500 300
 
 die:
 	gcc $(SRC) -g

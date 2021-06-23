@@ -40,6 +40,7 @@ typedef struct	s_philosopher
 }				t_philosopher;
 
 int		clear_traces(t_philosopher *ph);
+void	drop_forks(t_philosopher *phil);
 void	take_forks(t_philosopher *phil);
 void	print_cur_time(struct timeval start);
 void	show_data(t_philo *all);
