@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:39:39 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/23 16:38:27 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/23 17:29:28 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	checking_if_program_should_exit(t_philosopher *ph)
 		while(check_phs_hearts(ph) == 0 && check_number_of_eats(ph) == 0)
 			usleep(1000);
 }
-
 
 void	launching_the_program(t_philo *all)
 {
