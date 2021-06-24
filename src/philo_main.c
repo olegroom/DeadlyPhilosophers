@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:39:39 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/23 17:29:28 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/24 15:06:29 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_start_to_live(void *args)
 	t_philosopher	*phil;
 	
 	phil = (t_philosopher *)args;
-	while (phil->all->finish_flag == 0)
+	while (1)
 	{
 		thinking(phil);
 		take_forks(phil);
@@ -43,9 +43,10 @@ void	run_threads(t_philo *all, t_philosopher *ph)
 		ph[i].all = all;
 		ph[i].num = i;
 		ph[i].num_eats = 0;
-		if (pthread_create(&ph[i].thr, NULL, ft_start_to_live, &ph[i]) != SUCCESS)
-			error_found("Creation thread error");
 	}
+	i = -1;
+	while (++i < all->num_of_phs)
+		pthread_create(&ph[i].thr, NULL, ft_start_to_live, &ph[i]);
 }
 
 void	checking_if_program_should_exit(t_philosopher *ph)

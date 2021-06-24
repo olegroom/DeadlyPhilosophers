@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 18:20:14 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/23 16:42:54 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/24 15:06:17 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ void	thinking(t_philosopher *phil)
 
 void	take_forks(t_philosopher *phil)
 {
+	pthread_mutex_lock(&phil->all->to_lock_mutex);
 	pthread_mutex_lock(phil->le_f);
 	if (phil->all->finish_flag == 0)
 		printf("%d ms Ph#%d has taken a fork\n", get_cur_time(phil->all->start), phil->num);
 	pthread_mutex_lock(phil->ri_f);
 	if (phil->all->finish_flag == 0)
 		printf("%d ms Ph#%d has taken a fork\n", get_cur_time(phil->all->start), phil->num);
-
+	pthread_mutex_unlock(&phil->all->to_lock_mutex);
 }
 
 void	eating(t_philosopher *phil)
@@ -37,7 +38,8 @@ void	eating(t_philosopher *phil)
 	if (phil->all->finish_flag == 0)
 		printf("%d ms Ph#%d is eating\n", get_cur_time(phil->all->start), phil->num);
 	pthread_mutex_unlock(&phil->all->print_mutex);
-	phil->num_eats++;
+	if (phil->all->fl_noe == 1)
+		phil->num_eats++;
 	phil->t = get_cur_time(phil->all->start);
 	while ((get_cur_time(phil->all->start) - phil->t) < phil->all->eat_time)
 		usleep(1000);
