@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:02:26 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/25 14:29:13 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/25 15:41:05 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 int	intlen(int d)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (d > 0)
 	{
 		d /= 10;
-		i++;		
+		i++;
 	}
 	return (i);
 }
 
 int	ft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -50,6 +50,6 @@ int	get_cur_time(struct timeval start)
 	struct timeval	end;
 
 	gettimeofday(&end, NULL);
-	return ((end.tv_sec * 1000000 + end.tv_usec) - \
-	(start.tv_sec * 1000000 + start.tv_usec)) / 1000;
+	return (((end.tv_sec * 1000000 + end.tv_usec) - \
+	(start.tv_sec * 1000000 + start.tv_usec)) / 1000);
 }

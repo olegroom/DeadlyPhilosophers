@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:39:39 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/25 15:28:23 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/25 15:44:24 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*ft_start_to_live(void *args)
 {
 	t_philosopher	*phil;
-	
+
 	phil = (t_philosopher *)args;
 	while (1)
 	{
@@ -30,7 +30,7 @@ void	*ft_start_to_live(void *args)
 
 void	run_threads(t_philo *all, t_philosopher *ph)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < all->num_of_phs)
@@ -45,7 +45,8 @@ void	run_threads(t_philo *all, t_philosopher *ph)
 		ph[i].num_eats = 0;
 	}
 	i = -1;
-	while (++i < all->num_of_phs) {
+	while (++i < all->num_of_phs)
+	{
 		pthread_create(&ph[i].thr, NULL, ft_start_to_live, &ph[i]);
 		usleep(10);
 	}
@@ -57,7 +58,7 @@ void	checking_if_program_should_exit(t_philosopher *ph)
 		while (check_phs_hearts(ph) == 0)
 			usleep(1000);
 	else
-		while(check_phs_hearts(ph) == 0 && check_number_of_eats(ph) == 0)
+		while (check_phs_hearts(ph) == 0 && check_number_of_eats(ph) == 0)
 			usleep(1000);
 	// int i;
 	
@@ -72,7 +73,7 @@ void	checking_if_program_should_exit(t_philosopher *ph)
 
 int	launching_the_program(t_philo *all)
 {
-	t_philosopher *ph;
+	t_philosopher	*ph;
 
 	ph = malloc(sizeof(t_philosopher) * all->num_of_phs + 1);
 	run_threads(all, ph);
@@ -83,7 +84,7 @@ int	launching_the_program(t_philo *all)
 int	main(int ac, char **argv)
 {
 	t_philo	all;
-	
+
 	gettimeofday(&all.start, NULL);
 	if (ac != 6 && ac != 5)
 		return (error_found("Wrong number of arguments\n"));

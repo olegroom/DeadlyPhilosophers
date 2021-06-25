@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 18:20:14 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/25 15:09:05 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/25 15:43:11 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,12 @@ void	take_forks(t_philosopher *phil)
 {
 	pthread_mutex_lock(phil->le_f);
 	if (phil->all->finish_flag == 0)
-		printf("%d %d has taken a fork\n", get_cur_time(phil->all->start), phil->num);
+		printf("%d %d has taken a fork\n", \
+		get_cur_time(phil->all->start), phil->num);
 	pthread_mutex_lock(phil->ri_f);
 	if (phil->all->finish_flag == 0)
-		printf("%d %d has taken a fork\n", get_cur_time(phil->all->start), phil->num);
+		printf("%d %d has taken a fork\n", \
+		get_cur_time(phil->all->start), phil->num);
 }
 
 void	eating(t_philosopher *phil)
@@ -51,8 +53,8 @@ void	drop_forks(t_philosopher *phil)
 
 void	sleeping(t_philosopher *phil)
 {
-	int s;
-	
+	int	s;
+
 	pthread_mutex_lock(&phil->all->print_mutex);
 	if (phil->all->finish_flag == 0)
 		printf("%d %d is sleeping\n", get_cur_time(phil->all->start), phil->num);
