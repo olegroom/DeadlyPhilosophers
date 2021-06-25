@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:59:12 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/24 14:14:29 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/25 14:27:08 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,30 @@ int	clear_traces(t_philosopher *ph)
 	while (++i < ph->all->num_of_phs)
 		pthread_mutex_destroy(&ph->all->forks[i]);
 		// if (pthread_mutex_destroy(&ph->all->forks[i]) == EBUSY)
-		// 	error_found("Mutex destroy error!");
+		// 	return(error_found("Mutex destroy error!"));
 	i = -1;
 	while (++i < ph->all->num_of_phs)
 		if (pthread_detach(ph[i].thr) != SUCCESS)
-			error_found("Pthread detach error");
+			return(error_found("Pthread detach error"));
 	
 	//unlock and destroy print mutex (+ to_lock_mutex)
 	// pthread_mutex_unlock(&ph->all->to_lock_mutex);
 	// pthread_mutex_destroy(&ph->all->to_lock_mutex);
 	if (pthread_mutex_unlock(&ph->all->print_mutex) != SUCCESS)
-		error_found("Print mutex unlock error");
+		return(error_found("Print mutex unlock error"));
 	usleep(100);
 	if (pthread_mutex_destroy(&ph->all->print_mutex) == EBUSY)
-		error_found("Mutex destroy error!!!");
+		return(error_found("Mutex destroy error!!!"));
 	// pthread_mutex_destroy(&ph->all->print_mutex);
 
 	return (0);
 }
 
 
-void	error_found(char *str)
+int	error_found(char *str)
 {
-	printf("%s\n", str);
-	exit(-1);
+	write(1, str, ft_strlen(str));
+	return (1);
 }
 
 int	ft_memfree(char **str)

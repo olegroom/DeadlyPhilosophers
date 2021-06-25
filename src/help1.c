@@ -6,11 +6,34 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:02:26 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/23 15:41:25 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/25 14:29:13 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
+
+int	intlen(int d)
+{
+	int i;
+
+	i = 0;
+	while (d > 0)
+	{
+		d /= 10;
+		i++;		
+	}
+	return (i);
+}
+
+int	ft_strlen(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
 
 void	show_data(t_philo *all)
 {

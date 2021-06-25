@@ -4,11 +4,9 @@ HEADER = philo.h
 
 NAME = philo
 
-O_FLAGS = -O2
-
 all: $(SRC)
 	gcc $(SRC) -g -Wall -Wextra -Werror -o $(NAME)
-	./$(NAME) 4 130 60 60
+	./$(NAME) 181 130 60 60 
 
 clean:
 

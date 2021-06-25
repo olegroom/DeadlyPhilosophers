@@ -39,6 +39,8 @@ typedef struct	s_philosopher
 	pthread_t thr;
 }				t_philosopher;
 
+int		ft_strlen(char *str);
+int		intlen(int d);
 int		clear_traces(t_philosopher *ph);
 void	drop_forks(t_philosopher *phil);
 void	take_forks(t_philosopher *phil);
@@ -51,10 +53,11 @@ int     ft_atoi(const char *str);
 void    *ft_memset(void *dest, int c, size_t n);
 int     ft_memfree(char **str);
 char    *mall(char **str, int n);
-void	error_found(char *str);
+int		error_found(char *str);
 void	eating(t_philosopher *phil);
 void	sleeping(t_philosopher *phil);
 void	thinking(t_philosopher *phil);
 int		check_phs_hearts(t_philosopher *ph);
 int		check_number_of_eats(t_philosopher *ph);
+
 #endif
