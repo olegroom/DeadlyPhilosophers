@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 15:56:30 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/25 15:40:19 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/26 16:25:26 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check_phs_hearts(t_philosopher *ph)
 		if (t >= ph->all->die_time)
 		{
 			ph->all->finish_flag = 1;
-			printf("%d %d died\n", get_cur_time(ph->all->start), ph[i].num);
+			printf("%d %d died\n", get_cur_time(ph->all->start), ph[i].num + 1);
 			return (1);
 		}
 	}

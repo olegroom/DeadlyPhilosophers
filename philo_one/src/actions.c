@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 18:20:14 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/25 15:43:11 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/26 16:15:15 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	thinking(t_philosopher *phil)
 {
 	pthread_mutex_lock(&phil->all->print_mutex);
 	if (phil->all->finish_flag == 0)
-		printf("%d %d is thinking\n", get_cur_time(phil->all->start), phil->num);
+		printf("%d %d is thinking\n", get_cur_time(phil->all->start), phil->num + 1);
 	pthread_mutex_unlock(&phil->all->print_mutex);
 }
 
@@ -24,19 +24,19 @@ void	take_forks(t_philosopher *phil)
 {
 	pthread_mutex_lock(phil->le_f);
 	if (phil->all->finish_flag == 0)
-		printf("%d %d has taken a fork\n", \
-		get_cur_time(phil->all->start), phil->num);
+		printf("%d %d has taken fork\n", \
+		get_cur_time(phil->all->start), phil->num + 1);
 	pthread_mutex_lock(phil->ri_f);
 	if (phil->all->finish_flag == 0)
-		printf("%d %d has taken a fork\n", \
-		get_cur_time(phil->all->start), phil->num);
+		printf("%d %d has taken fork\n", \
+		get_cur_time(phil->all->start), phil->num + 1);
 }
 
 void	eating(t_philosopher *phil)
 {
 	pthread_mutex_lock(&phil->all->print_mutex);
 	if (phil->all->finish_flag == 0)
-		printf("%d %d is eating\n", get_cur_time(phil->all->start), phil->num);
+		printf("%d %d is eating\n", get_cur_time(phil->all->start), phil->num + 1);
 	pthread_mutex_unlock(&phil->all->print_mutex);
 	if (phil->all->fl_noe == 1)
 		phil->num_eats++;
@@ -57,7 +57,7 @@ void	sleeping(t_philosopher *phil)
 
 	pthread_mutex_lock(&phil->all->print_mutex);
 	if (phil->all->finish_flag == 0)
-		printf("%d %d is sleeping\n", get_cur_time(phil->all->start), phil->num);
+		printf("%d %d is sleeping\n", get_cur_time(phil->all->start), phil->num + 1);
 	pthread_mutex_unlock(&phil->all->print_mutex);
 	s = get_cur_time(phil->all->start);
 	while ((get_cur_time(phil->all->start) - s) < phil->all->sleep_time)

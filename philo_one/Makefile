@@ -2,7 +2,7 @@ SRC = src/actions.c     src/help1.c      src/memory.c     src/parser.c    src/ph
 
 HEADER = philo.h
 
-NAME = philo
+NAME = philo_one
 
 OBJ = $(SRC:.c=.o)
 
@@ -19,7 +19,6 @@ $(NAME): $(OBJ)
 
 all: $(SRC)
 	gcc $(SRC) -g -Wall -Wextra -Werror -o $(NAME)
-	./$(NAME) 181 130 60 60 
 
 clean:
 	rm -f $(OBJ)

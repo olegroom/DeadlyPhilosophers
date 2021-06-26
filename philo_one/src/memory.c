@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:59:12 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/25 14:27:08 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/26 16:50:45 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	clear_traces(t_philosopher *ph)
 
 int	error_found(char *str)
 {
-	write(1, str, ft_strlen(str));
-	return (1);
+	write(2, str, ft_strlen(str));
+	return (-1);
 }
 
 int	ft_memfree(char **str)

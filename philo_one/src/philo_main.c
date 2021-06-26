@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:39:39 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/25 15:44:24 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/26 17:04:53 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,6 @@ void	checking_if_program_should_exit(t_philosopher *ph)
 	else
 		while (check_phs_hearts(ph) == 0 && check_number_of_eats(ph) == 0)
 			usleep(1000);
-	// int i;
-	
-	// i = 0;
-	// pthread_t *checker;
-	// while (i < 2)
-	// {
-	// 	pthread_create(&checker[i], NULL, check_phs_hearts, NULL);
-	// 	i++;
-	// }
 }
 
 int	launching_the_program(t_philo *all)
@@ -88,6 +79,7 @@ int	main(int ac, char **argv)
 	gettimeofday(&all.start, NULL);
 	if (ac != 6 && ac != 5)
 		return (error_found("Wrong number of arguments\n"));
-	ft_pars_and_init(&all, argv);
+	if (ft_pars_and_init(&all, argv) == -1)
+		return (error_found("Input data format error\n"));
 	return (launching_the_program(&all));
 }

@@ -47,7 +47,7 @@ void	take_forks(t_philosopher *phil);
 void	print_cur_time(struct timeval start);
 void	show_data(t_philo *all);
 int     get_cur_time(struct timeval start);
-void    ft_pars_and_init(t_philo *all, char **argv);
+int		ft_pars_and_init(t_philo *all, char **argv);
 int     len(long int nbr);
 int     ft_atoi(const char *str);
 void    *ft_memset(void *dest, int c, size_t n);

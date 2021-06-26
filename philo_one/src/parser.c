@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:01:21 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/25 15:42:26 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/26 17:03:55 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,20 @@ int	ft_atoi(const char *str)
 	num = 0;
 	i = 0;
 	if (str[i] == '-' || str[i] == '+')
-		return (error_found("Please, delete any signs\n"));
+		return (-1);
 	while (str[i] != '\0')
 	{
 		if (str[i] > '9' || str[i] < '0')
-			return (error_found("Wrong input. Need to be only digits\n"));
+			return (-1);
 		num = num * 10 + (str[i] - 48);
 		i++;
 	}
 	if (num > 2147483647)
-		return (error_found("Too big input value\n"));
+		return (-1);
 	return (num);
 }
 
-void	ft_pars_and_init(t_philo *all, char **argv)
+int	ft_pars_and_init(t_philo *all, char **argv)
 {
 	int	i;
 
@@ -61,17 +61,26 @@ void	ft_pars_and_init(t_philo *all, char **argv)
 	all->forks = malloc(sizeof(pthread_mutex_t) * all->num_of_phs);
 	i = -1;
 	while (++i < all->num_of_phs)
-		pthread_mutex_init(&all->forks[i], NULL);
-	pthread_mutex_init(&all->print_mutex, NULL);
-	pthread_mutex_init(&all->to_lock_mutex, NULL);
+		if (pthread_mutex_init(&all->forks[i], NULL) != SUCCESS)
+			return (error_found("Mutex init error"));
+	if (pthread_mutex_init(&all->print_mutex, NULL))
+		return (error_found("Mutex init error"));
+	if (pthread_mutex_init(&all->to_lock_mutex, NULL))
+		return (error_found("Mutex init error"));
+ 
 	all->die_time = ft_atoi(argv[2]);
 	all->eat_time = ft_atoi(argv[3]);
 	all->sleep_time = ft_atoi(argv[4]);
+	if (all->num_of_phs == -1 || all->die_time == -1 || all->eat_time == -1 || all->sleep_time == -1)
+		return (-1);
 	if (argv[5])
 	{
 		all->nums_of_eatings = ft_atoi(argv[5]);
+		if (all->nums_of_eatings == -1)
+			return (-1);
 		all->fl_noe = 1;
 	}
 	else
 		all->fl_noe = 0;
+	return (0);
 }
