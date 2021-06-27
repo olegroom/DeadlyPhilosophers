@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:39:39 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/26 17:04:53 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/27 17:07:03 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	run_threads(t_philo *all, t_philosopher *ph)
 	while (++i < all->num_of_phs)
 	{
 		pthread_create(&ph[i].thr, NULL, ft_start_to_live, &ph[i]);
-		usleep(10);
+		usleep(20);
 	}
 }
 
@@ -68,6 +68,7 @@ int	launching_the_program(t_philo *all)
 
 	ph = malloc(sizeof(t_philosopher) * all->num_of_phs + 1);
 	run_threads(all, ph);
+	usleep(20 * all->num_of_phs + 1000);
 	checking_if_program_should_exit(ph);
 	return (clear_traces(ph));
 }
