@@ -15,10 +15,9 @@ all: $(NAME)
 	gcc $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-		$(CC) $(CFLAGS) $^ -o $(NAME)
-
-all: $(SRC)
 	gcc $(SRC) -g -Wall -Wextra -Werror -o $(NAME)
+
+all: $(NAME)
 
 clean:
 	rm -f $(OBJ)

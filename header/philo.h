@@ -54,7 +54,6 @@ int		len(long int nbr);
 int		ft_atoi(const char *str);
 void	*ft_memset(void *dest, int c, size_t n);
 int		ft_memfree(char **str);
-char	*mall(char **str, int n);
 int		error_found(char *str);
 void	eating(t_philosopher *phil);
 void	sleeping(t_philosopher *phil);
