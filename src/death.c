@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 15:56:30 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/26 16:25:26 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/27 18:17:30 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ int	check_number_of_eats(t_philosopher *ph)
 			continue ;
 		return (0);
 	}
+	pthread_mutex_lock(&ph->all->print_mutex);
 	return (1);
 }

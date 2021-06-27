@@ -2,7 +2,7 @@ SRC = src/actions.c     src/help1.c      src/memory.c     src/parser.c    src/ph
 
 HEADER = philo.h
 
-NAME = philo_one
+NAME = philo
 
 OBJ = $(SRC:.c=.o)
 

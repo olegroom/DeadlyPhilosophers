@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:39:39 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/27 17:07:03 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/27 18:35:32 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	run_threads(t_philo *all, t_philosopher *ph)
 		ph[i].num_eats = 0;
 	}
 	i = -1;
+	gettimeofday(&all->start, NULL);
 	while (++i < all->num_of_phs)
 	{
 		pthread_create(&ph[i].thr, NULL, ft_start_to_live, &ph[i]);
@@ -67,6 +68,8 @@ int	launching_the_program(t_philo *all)
 	t_philosopher	*ph;
 
 	ph = malloc(sizeof(t_philosopher) * all->num_of_phs + 1);
+	if (ph == NULL)
+		error_found("Malloc error");
 	run_threads(all, ph);
 	usleep(20 * all->num_of_phs + 1000);
 	checking_if_program_should_exit(ph);
@@ -77,7 +80,6 @@ int	main(int ac, char **argv)
 {
 	t_philo	all;
 
-	gettimeofday(&all.start, NULL);
 	if (ac != 6 && ac != 5)
 		return (error_found("Wrong number of arguments\n"));
 	if (ft_pars_and_init(&all, argv) == -1)
