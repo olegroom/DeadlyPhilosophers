@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:39:39 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/28 15:11:59 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/28 15:15:42 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	checking_if_program_should_exit(t_philosopher *ph)
 int	launching_the_program(t_philo *all)
 {
 	t_philosopher	*ph;
-	
+
 	ph = malloc(sizeof(t_philosopher) * all->num_of_phs);
 	if (ph == NULL)
 		error_found("Malloc error");
