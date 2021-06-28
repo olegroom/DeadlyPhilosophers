@@ -6,7 +6,7 @@ NAME = philo
 
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -O0
 
 
 all: $(NAME)
@@ -15,7 +15,7 @@ all: $(NAME)
 	gcc $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	gcc $(SRC) -g -Wall -Wextra -Werror -o $(NAME)
+	gcc $(SRC) $(CFLAGS) -o $(NAME)
 
 all: $(NAME)
 
