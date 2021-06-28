@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:39:39 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/28 13:49:05 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/28 15:11:59 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	run_threads(t_philo *all, t_philosopher *ph)
 			ph[i].le_f = &all->forks[i - 1];
 		ph[i].ri_f = &all->forks[i];
 		ph[i].all = all;
-		ph[i].num = i;
+		ph[i].num = i + 1;
 		ph[i].num_eats = 0;
 	}
 	i = -1;

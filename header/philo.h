@@ -20,12 +20,9 @@ typedef struct s_philo
 	int				nums_of_eatings;
 	struct timeval	start;
 	int				fl_noe;
-	int				i;
 	int				finish_flag;
 	pthread_mutex_t	print_mutex;
-	pthread_mutex_t	to_lock_mutex;
 	pthread_mutex_t	*forks;
-	int				delay_time;
 }			t_philo;
 
 typedef struct s_philosopher
@@ -35,7 +32,6 @@ typedef struct s_philosopher
 	int				num_eats;
 	int				t;
 	int				num;
-	int				fl;
 	t_philo			*all;
 	pthread_t		thr;
 }				t_philosopher;
@@ -52,7 +48,6 @@ int		get_cur_time(struct timeval start);
 int		ft_pars_and_init(t_philo *all, char **argv);
 int		len(long int nbr);
 int		ft_atoi(const char *str);
-void	*ft_memset(void *dest, int c, size_t n);
 int		ft_memfree(char **str);
 int		error_found(char *str);
 void	eating(t_philosopher *phil);

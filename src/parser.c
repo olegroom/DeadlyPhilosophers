@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 19:01:21 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/28 13:40:54 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/28 15:13:22 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,18 @@ int	mutex_creation(t_philo *all)
 			return (error_found("Mutex init error"));
 	if (pthread_mutex_init(&all->print_mutex, NULL))
 		return (error_found("Mutex init error"));
-	if (pthread_mutex_init(&all->to_lock_mutex, NULL))
-		return (error_found("Mutex init error"));
 	return (0);
 }
 
 int	ft_pars_and_init(t_philo *all, char **argv)
 {
 	all->num_of_phs = ft_atoi(argv[1]);
+	all->finish_flag = 0;
 	all->forks = malloc(sizeof(pthread_mutex_t) * all->num_of_phs);
 	if (all->forks == NULL)
 		error_found("Malloc error");
 	if (mutex_creation(all) == -1)
 		return (-1);
-	all->finish_flag = 0;
 	all->die_time = ft_atoi(argv[2]);
 	all->eat_time = ft_atoi(argv[3]);
 	all->sleep_time = ft_atoi(argv[4]);

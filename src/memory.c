@@ -6,7 +6,7 @@
 /*   By: rosfryd <rosfryd@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 15:59:12 by rosfryd           #+#    #+#             */
-/*   Updated: 2021/06/27 20:01:38 by rosfryd          ###   ########.fr       */
+/*   Updated: 2021/06/28 14:42:07 by rosfryd          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	clear_traces(t_philosopher *ph)
 	i = -1;
 	while (++i < ph->all->num_of_phs)
 		pthread_mutex_unlock(&ph->all->forks[i]);
+	usleep(10000);
 	i = -1;
 	while (++i < ph->all->num_of_phs)
 		pthread_mutex_destroy(&ph->all->forks[i]);
